@@ -1,4 +1,4 @@
-from pyseo.seo_analyst import SEOAnalyst
+from seopy.seo_analyst import SEOAnalyst
 
 
 if __name__ == '__main__':

@@ -29,6 +29,12 @@ class SEOAnalyst:
         # Get images
         self.images = self.get_images(html_site)
 
+        # Get total frames
+        self.frames = self.get_frames(html_site)
+
+        # Get total iframes
+        self.iframes = self.get_iframes(html_site)
+
 
     def get_meta_tags(self, html_site):
         '''
@@ -104,3 +110,19 @@ class SEOAnalyst:
             images.append(tag_info)
 
         return images
+
+
+    def get_frames(self, html_site):
+        '''
+        Get total frames in the website
+        '''
+
+        return len(html_site.find_all('frame'))
+
+
+    def get_iframes(self, html_site):
+        '''
+        Get total iframes in the website
+        '''
+
+        return len(html_site.find_all('iframes'))

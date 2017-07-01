@@ -26,6 +26,9 @@ class SEOAnalyst:
         # Get header tags
         self.headers = self.get_header_tags(html_site)
 
+        # Get images
+        self.images = self.get_images(html_site)
+
 
     def get_meta_tags(self, html_site):
         '''
@@ -51,7 +54,7 @@ class SEOAnalyst:
         return meta_tags
 
 
-    def get_title_tag(self, html_site):
+    def get_title(self, html_site):
         '''
         Get the title from the website
         '''
@@ -66,6 +69,7 @@ class SEOAnalyst:
         '''
         Get all header tags from the website
         '''
+
         header_tags = {}
 
         for i in range(1, 7):
@@ -81,3 +85,22 @@ class SEOAnalyst:
                 header_tags[header_type].append(tag_info)
 
         return header_tags
+
+
+    def get_images(self, html_site):
+        '''
+        Get all images in the web site
+        '''
+
+        images_tags = html_site.find_all('img')
+        images = []
+
+        for image in images_tags:
+            tag_info = {'src': image.attrs['src']}
+
+            if 'alt' in image.attrs:
+                tag_info['alt'] = image.attrs['alt']
+
+            images.append(tag_info)
+
+        return images

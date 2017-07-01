@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 class SEOAnalyst:
 
     def __init__(self, url):
-        self.url = url
+        self.url = {'text': url, 'size': len(url)}
 
 
     def analyse(self):
@@ -14,7 +14,7 @@ class SEOAnalyst:
         Analyse the URL and separate the SEO information by variables
         '''
         
-        request = requests.get(self.url)
+        request = requests.get(self.url['text'])
         html_site = BeautifulSoup(request.text, 'html.parser')
 
         # Get meta tags

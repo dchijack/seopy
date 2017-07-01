@@ -23,6 +23,9 @@ class SEOAnalyst:
         # Get title
         self.title = self.get_title(html_site)
 
+        # Get header tags
+        self.headers = self.get_header_tags(html_site)
+
 
     def get_meta_tags(self, html_site):
         '''
@@ -48,7 +51,7 @@ class SEOAnalyst:
         return meta_tags
 
 
-    def get_title(self, html_site):
+    def get_title_tag(self, html_site):
         '''
         Get the title from the website
         '''
@@ -57,3 +60,24 @@ class SEOAnalyst:
         title_tag = {'text': title, 'size': len(title)}
 
         return title_tag
+
+
+    def get_header_tags(self, html_site):
+        '''
+        Get all header tags from the website
+        '''
+        header_tags = {}
+
+        for i in range(1, 7):
+            header_type = 'h'+str(i)
+
+            header_tags[header_type] = []
+            headers = html_site.find_all(header_type)
+
+            for header in headers:
+                header_text = header.getText().strip()
+                tag_info = {'text': header_text, 'size': len(header_text)}
+
+                header_tags[header_type].append(tag_info)
+
+        return header_tags

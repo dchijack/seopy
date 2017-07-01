@@ -20,6 +20,9 @@ class SEOAnalyst:
         # Get meta tags
         self.meta_tags = self.get_meta_tags(html_site)
 
+        # Get title
+        self.title = self.get_title(html_site)
+
 
     def get_meta_tags(self, html_site):
         '''
@@ -43,3 +46,14 @@ class SEOAnalyst:
                         meta_tags['meta_tags'].append(tag_info)
 
         return meta_tags
+
+
+    def get_title(self, html_site):
+        '''
+        Get the title from the website
+        '''
+
+        title = html_site.find('title').getText()
+        title_tag = {'text': title, 'size': len(title)}
+
+        return title_tag

@@ -29,11 +29,11 @@ class SEOAnalyst:
         # Get images
         self.images = self.get_images(html_site)
 
-        # Get total frames
+        # Get total frames and iframes
         self.frames = self.get_frames(html_site)
 
-        # Get total iframes
-        self.iframes = self.get_iframes(html_site)
+        # Get all internal and external links
+        self.links = self.get_links(html_site)
 
 
     def get_meta_tags(self, html_site):
@@ -65,10 +65,10 @@ class SEOAnalyst:
         Get the title from the website
         '''
 
-        title = html_site.find('title').getText()
-        title_tag = {'text': title, 'size': len(title)}
+        title_tag = html_site.find('title').getText()
+        title = {'text': title_tag, 'size': len(title_tag)}
 
-        return title_tag
+        return title
 
 
     def get_header_tags(self, html_site):
@@ -76,21 +76,19 @@ class SEOAnalyst:
         Get all header tags from the website
         '''
 
-        header_tags = {}
+        headers = {'h1': [], 'h2': [], 'h3': [], 'h4': [], 'h5': [], 'h6': []}
 
         for i in range(1, 7):
             header_type = 'h'+str(i)
+            headers_tags = html_site.find_all(header_type)
 
-            header_tags[header_type] = []
-            headers = html_site.find_all(header_type)
-
-            for header in headers:
+            for header in headers_tags:
                 header_text = header.getText().strip()
                 tag_info = {'text': header_text, 'size': len(header_text)}
 
-                header_tags[header_type].append(tag_info)
+                headers[header_type].append(tag_info)
 
-        return header_tags
+        return headers
 
 
     def get_images(self, html_site):
@@ -117,6 +115,28 @@ class SEOAnalyst:
         Get total frames and iframes in the website
         '''
         
-        frames = {'frames': len(html_site.find_all('frame')), 'iframes': en(html_site.find_all('iframes'))}
+        frames = {'frames': len(html_site.find_all('frame')), 'iframes': len(html_site.find_all('iframes'))}
 
         return frames
+
+
+    def get_links(self, html_site):
+        '''
+        Get all links in the website
+        '''
+
+        links = {'external': [], 'internal': []}
+
+        links_tags = html_site.find_all('a')
+        for link in links_tags:
+            if 'href' in link.attrs:
+
+                href = link.attrs['href'].strip()
+                tag_info = {'anchor_text': link.getText().strip(), 'href': href}
+                
+                if href.startswith('http') or href.startswith('https'):
+                    links['external'].append(tag_info)
+                else:
+                    links['internal'].append(tag_info)
+
+        return links

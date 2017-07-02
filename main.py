@@ -1,4 +1,4 @@
-from pyseo.seo_analyst import SEOAnalyst
+from seopy.seo_analyst import SEOAnalyst
 
 
 if __name__ == '__main__':
@@ -6,7 +6,6 @@ if __name__ == '__main__':
     
     seo_analyst = SEOAnalyst(url)
     seo_analyst.analyse()
-    
 
     # print(seo_analyst.url)
     # print(seo_analyst.meta_tags)

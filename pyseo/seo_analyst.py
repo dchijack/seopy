@@ -114,15 +114,9 @@ class SEOAnalyst:
 
     def get_frames(self, html_site):
         '''
-        Get total frames in the website
+        Get total frames and iframes in the website
         '''
+        
+        frames = {'frames': len(html_site.find_all('frame')), 'iframes': en(html_site.find_all('iframes'))}
 
-        return len(html_site.find_all('frame'))
-
-
-    def get_iframes(self, html_site):
-        '''
-        Get total iframes in the website
-        '''
-
-        return len(html_site.find_all('iframes'))
+        return frames
